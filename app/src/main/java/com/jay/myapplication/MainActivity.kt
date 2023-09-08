@@ -10,11 +10,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.jay.myapplication.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -25,12 +28,24 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
-
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        drawerLayout = findViewById<DrawerLayout>(R.id.myDrawerLayout)
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(binding.toolbar)
+
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
+
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, binding.toolbar, R.string.nav_open, R.string.nav_close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        if (savedInstanceState == null){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container,FirstFragment()).commit()
+            navigationView.setCheckedItem(R.id.nav_home)
+        }
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -63,5 +78,32 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.nav_home -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, FirstFragment()).commit()
+            R.id.action_100level -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, levelOneFragment()).commit()
+            R.id.action_200level -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, levelTwoFragment()).commit()
+            R.id.action_300level -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, levelThreeFragment()).commit()
+            R.id.action_400level -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, levelFourFragment()).commit()
+            R.id.action_500level -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, levelFiveFragment()).commit()
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else{
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 }

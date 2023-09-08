@@ -1,32 +1,68 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
     tools:context="com.jay.myapplication.MainActivity">
+    <item
+        android:id="@+id/nav_home"
+        android:orderInCategory="98"
+        android:title="Home"
+        android:icon="@drawable/baseline_home_24"/>
+
+    <item
+        android:title="Year"
+        android:orderInCategory="99">
+        <menu>
+    <group
+        android:checkableBehavior="single">
     <item
         android:id="@+id/action_100level"
         android:orderInCategory="100"
         android:title="@string/_100_level"
+        android:icon="@drawable/baseline_school_24"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_200level"
         android:orderInCategory="200"
-        android:title="200 Level"
+        android:title="@string/_200_level"
+        android:icon="@drawable/baseline_school_24"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_300level"
         android:orderInCategory="300"
-        android:title="300 Level"
+        android:title="@string/_300_level"
+        android:icon="@drawable/baseline_school_24"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_400level"
         android:orderInCategory="400"
-        android:title="400 Level"
+        android:title="@string/_400_level"
+        android:icon="@drawable/baseline_school_24"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_500level"
         android:orderInCategory="500"
-        android:title="500 Level"
+        android:title="@string/_500_level"
+        android:icon="@drawable/baseline_school_24"
         app:showAsAction="never"/>
+    </group>
+        </menu>
+    </item>
+
+    <item
+        android:title="Info"
+        android:orderInCategory="600">
+
+        <menu>
+            <item
+                android:id="@+id/action_do_something"
+                android:title="Contact Us"
+                android:icon="@drawable/baseline_support_agent_24">
+
+            </item>
+        </menu>
+
+    </item>
 
 
 
